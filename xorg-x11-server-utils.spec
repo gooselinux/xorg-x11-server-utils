@@ -5,7 +5,7 @@
 Summary: X.Org X11 X server utilities
 Name: xorg-x11-%{pkgname}
 Version: 7.4
-Release: 15%{?dist}.1
+Release: 15%{?dist}.2
 License: MIT
 Group: User Interface/X
 URL: http://www.x.org
@@ -72,7 +72,9 @@ Utility to perform keystone adjustments on X screens.
 %setup -q -c %{name}-%{version} -a2 -a3 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15
 
 #patch1100 -p0 -b .datadir-rgbpath-fix
-%patch1101 -p0 -b .cve-2011-0465
+pushd xrdb-*
+%patch1101 -p1 -b .cve-2011-0465
+popd
 
 %build
 
@@ -167,6 +169,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Wed Apr 13 2011 Adam Jackson <ajax@redhat.com> 7.4-15.el6_0.2
+- cve-2011-0465: Fix quoting and escaping logic to match upstream (#696310)
+
 * Wed Mar 16 2011 Adam Jackson <ajax@redhat.com> 7.4-15.el6_0.1
 - cve-2011-0465: Sanitize cpp macro expansion. (CVE 2011-0465)
 
